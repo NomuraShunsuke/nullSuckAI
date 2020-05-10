@@ -31,7 +31,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 'P@ssw0rd'
-      TZ: "Asia/ Tokyo"
+      TZ: "Asia/Tokyo"
 volumes:
   db_volume: #MySQLのデータ永続化するためdb_volumeというボリュームコンテナを作成する
   node_volume: #同じJavaScriptのライブラリーの関連データを保存するためのボリューム

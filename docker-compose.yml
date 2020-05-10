@@ -1,11 +1,11 @@
 version: '3'
 services:
   app:
-    build: ./client/. 
+    build: ./client/.
     volumes:
       - ./client/:/app
       - node_volume:/app/node_modules
-    ports: # ポートの指定
+    ports:
       - "3000:3000"
     command: yarn run dev
     environment:

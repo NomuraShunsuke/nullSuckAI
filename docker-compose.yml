@@ -1,0 +1,38 @@
+version: '3'
+services:
+  app: #Nuxt.jsを動かすコンテナの動作定義
+    build: ./client/ #Dockerfile の場所を指定
+    # 開発中はローカルにあるファイルを利用して動かしたいので自分のローカルをコンテナにマウントする
+    volumes:
+      - ./client/:/app
+      - node_volume:/app/node_modules
+    ports: # ポートの指定
+      - "3000:3000"
+    command: yarn run dev // 本番環境と違うコマンドで開発を動かしたい場合はcommandを使う
+    environment: // 環境変数の設定
+      API_URL: "http://api:5432"
+  api: # Pythonを動かすコンテナの動作定義
+    build: ./server/.
+    volumes:
+      - ./server/:/app
+      - pycache_volume:/root/.cache
+    ports:
+      - "5432:5432"
+    command: bash -c "pipenv run dev"
+    environment:
+      PY_ENV: "local"
+    links: - db # DBとリンクして立ち上がるようにする
+  db: # データベースのコンテナの動作定義
+    image: mysql: 5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - db_volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'P@ssw0rd'
+      TZ: "Asia/ Tokyo"
+volumes:
+  db_volume: #MySQLのデータ永続化するためdb_volumeというボリュームコンテナを作成する
+  node_volume #同じJavaScriptのライブラリーの関連データを保存するためのボリューム
+  pycache_volume #同じくPythonのライブラリーの関連データを保存するためのボリューム

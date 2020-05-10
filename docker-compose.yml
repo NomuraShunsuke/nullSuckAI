@@ -34,5 +34,5 @@ services:
       TZ: "Asia/ Tokyo"
 volumes:
   db_volume: #MySQLのデータ永続化するためdb_volumeというボリュームコンテナを作成する
-  node_volume #同じJavaScriptのライブラリーの関連データを保存するためのボリューム
-  pycache_volume #同じくPythonのライブラリーの関連データを保存するためのボリューム
+  node_volume: #同じJavaScriptのライブラリーの関連データを保存するためのボリューム
+  pycache_volume: #同じくPythonのライブラリーの関連データを保存するためのボリューム
